@@ -1,7 +1,14 @@
 import 'colors';
+import { inquirerMenu } from './helpers/inquirer';
 
 const main = async () => {
-  console.log('Hello World'.green);
+  let option = '';
+
+  do {
+    option = await inquirerMenu();
+
+    console.log(`You selected: ${option}`.cyan);
+  } while (option !== '0');
 };
 
 main();
