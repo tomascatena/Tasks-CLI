@@ -1,17 +1,16 @@
 import 'colors';
 import { inquirerMenu, pause, readInput } from './helpers/inquirer';
-import { saveToDB } from './helpers/saveFile';
+import { saveToDB, readFromDB } from './helpers/DBHandlers';
 import { Tasks } from './models/Tasks';
-import fs from 'fs';
 
 const main = async () => {
   let option = '';
   const tasks = new Tasks();
 
-  const tasksFromDB = fs.readFileSync('./src/db/db.json', 'utf8');
+  const tasksFromDB = readFromDB();
 
   if (tasksFromDB) {
-    tasks.initializeTasks(JSON.parse(tasksFromDB));
+    tasks.initializeTasks(tasksFromDB);
   }
 
   do {
