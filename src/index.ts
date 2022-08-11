@@ -1,5 +1,5 @@
 import 'colors';
-import { inquirerMenu } from './helpers/inquirer';
+import { inquirerMenu, pause } from './helpers/inquirer';
 
 const main = async () => {
   let option = '';
@@ -7,7 +7,9 @@ const main = async () => {
   do {
     option = await inquirerMenu();
 
-    console.log(`You selected: ${option}`.cyan);
+    console.log({ option });
+
+    await pause();
   } while (option !== '0');
 };
 
