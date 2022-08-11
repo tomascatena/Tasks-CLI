@@ -42,7 +42,7 @@ const menuOptions = [
 export const inquirerMenu = async () => {
   console.clear();
   console.log('===================================================='.green);
-  console.log('Welcome to the CLI for the Task Manager App'.green);
+  console.log('Welcome to the CLI for the Task Manager App'.white);
   console.log('===================================================='.green);
   console.log('');
 

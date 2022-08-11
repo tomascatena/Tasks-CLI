@@ -1,5 +1,7 @@
 import 'colors';
 import { inquirerMenu, pause } from './helpers/inquirer';
+import { Task } from './models/Task';
+import { Tasks } from './models/Tasks';
 
 const main = async () => {
   let option = '';
