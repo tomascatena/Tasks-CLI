@@ -18,7 +18,15 @@ export class Tasks {
     return task;
   }
 
+  getTasks() {
+    return this.tasks;
+  }
+
   getArrayOfTasks() {
     return Object.values(this.tasks);
+  }
+
+  initializeTasks(tasks: TasksList) {
+    this.tasks = tasks;
   }
 }

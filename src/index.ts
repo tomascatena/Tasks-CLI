@@ -1,10 +1,18 @@
 import 'colors';
 import { inquirerMenu, pause, readInput } from './helpers/inquirer';
+import { saveToDB } from './helpers/saveFile';
 import { Tasks } from './models/Tasks';
+import fs from 'fs';
 
 const main = async () => {
   let option = '';
   const tasks = new Tasks();
+
+  const tasksFromDB = fs.readFileSync('./src/db/db.json', 'utf8');
+
+  if (tasksFromDB) {
+    tasks.initializeTasks(JSON.parse(tasksFromDB));
+  }
 
   do {
     option = await inquirerMenu();
@@ -39,7 +47,7 @@ const main = async () => {
         break;
     }
 
-    console.log(tasks);
+    saveToDB(tasks.getTasks());
 
     await pause();
   } while (option !== '0');
