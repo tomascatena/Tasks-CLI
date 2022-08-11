@@ -59,3 +59,14 @@ export const pause = async () => {
     message: `Press ${'ENTER'.green} to continue...`,
   });
 };
+
+export const readInput = async (message: string) => {
+  const { answer } = await inquirer.prompt({
+    type: 'input',
+    name: 'answer',
+    message,
+    validate: (input: string) => (input.trim().length > 0 ? true : 'Please enter a value'),
+  });
+
+  return answer;
+};

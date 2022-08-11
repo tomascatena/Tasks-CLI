@@ -11,7 +11,14 @@ export class Tasks {
     this.tasks = {};
   }
 
-  add(task: Task) {
+  createTask(title: string) {
+    const task = new Task(title);
     this.tasks[task.id] = task;
+
+    return task;
+  }
+
+  getTasks() {
+    return this.tasks;
   }
 }
