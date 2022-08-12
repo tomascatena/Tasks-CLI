@@ -56,18 +56,24 @@ const main = async () => {
         if (tasks.getTasks().length) {
           const taskId = await showTasksToDelete(tasks.getTasks());
 
-          const taskToDelete = tasks.getTasks().find((t) => t.id === taskId);
+          if (taskId === 'all') {
+            tasks.deleteAllTasks();
+          } else if (taskId === '0') {
+            break;
+          } else {
+            const taskToDelete = tasks.getTasks().find((t) => t.id === taskId);
 
-          let confirmDeleteTask = false;
-          if (taskToDelete) {
-            confirmDeleteTask = await confirmSelection(
-              `Are you sure you want to delete task ${taskToDelete?.title}?`
-            );
-          }
+            let confirmDeleteTask = false;
+            if (taskToDelete) {
+              confirmDeleteTask = await confirmSelection(
+                `Are you sure you want to delete task ${taskToDelete?.title}?`
+              );
+            }
 
-          if (taskId && confirmDeleteTask) {
-            tasks.deleteTask(taskId);
-            console.log(`Task ${taskToDelete?.title} was deleted.`.blue.bold);
+            if (taskId && confirmDeleteTask) {
+              tasks.deleteTask(taskId);
+              console.log(`Task ${taskToDelete?.title} was deleted.`.blue.bold);
+            }
           }
         } else {
           console.log('There are no tasks to delete.'.red.bold);

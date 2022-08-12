@@ -73,14 +73,26 @@ export const readInput = async (message: string) => {
 };
 
 export const showTasksToDelete = async (tasks: Task[]) => {
+  const choices = tasks.map((task, index) => ({
+    value: task.id,
+    name: `${(index + 1).toString().green}. ${task.title}`,
+  }));
+
+  choices.unshift({
+    value: '0',
+    name: `${'0'.green}. Cancel`,
+  });
+
+  choices.push({
+    value: 'all',
+    name: `${'all'.green}. Delete all tasks`,
+  });
+
   const { taskId } = await inquirer.prompt({
     type: 'list',
     name: 'taskId',
     message: 'Select a task to delete:',
-    choices: tasks.map((task, index) => ({
-      value: task.id,
-      name: `${(index + 1).toString().green}. ${task.title}`,
-    })),
+    choices,
   });
 
   return taskId;

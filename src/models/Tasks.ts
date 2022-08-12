@@ -48,4 +48,8 @@ export class Tasks {
   deleteTask(taskId: string) {
     this.tasks = this.tasks.filter((t) => t.id !== taskId);
   }
+
+  deleteAllTasks() {
+    this.tasks = [];
+  }
 }
