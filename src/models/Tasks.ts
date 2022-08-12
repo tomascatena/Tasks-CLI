@@ -1,4 +1,5 @@
 import { Task } from './Task';
+import { format, parseISO, formatISO } from 'date-fns';
 
 export class Tasks {
   private tasks: Task[];
@@ -31,7 +32,15 @@ export class Tasks {
       const statusColor = task.completedOn ? 'green' : 'red';
       const taskNumber = (index + 1).toString().green;
 
-      tasksToPrint.push(`${taskNumber}. ${task.title} :: ${status[statusColor]}`);
+      const taskInfo =
+        status === 'Completed'
+          ? `Completed on ${format(
+              parseISO((task.completedOn as Date).toString()),
+              'EEEE do MMMM yyyy'
+            )}`
+          : 'Pending';
+
+      tasksToPrint.push(`${taskNumber}. ${task.title} :: ${taskInfo[statusColor]}`);
     });
 
     return tasksToPrint;
