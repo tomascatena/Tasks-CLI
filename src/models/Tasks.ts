@@ -52,4 +52,14 @@ export class Tasks {
   deleteAllTasks() {
     this.tasks = [];
   }
+
+  setCompletedTasks(tasksIdsToBeCompleted: string[]) {
+    this.tasks.forEach((task) => {
+      if (tasksIdsToBeCompleted.includes(task.id)) {
+        task.completedOn = new Date();
+      } else {
+        task.completedOn = null;
+      }
+    });
+  }
 }

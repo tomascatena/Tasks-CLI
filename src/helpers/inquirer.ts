@@ -83,10 +83,12 @@ export const showTasksToDelete = async (tasks: Task[]) => {
     name: `${'0'.green}. Cancel`,
   });
 
-  choices.push({
-    value: 'all',
-    name: `${'all'.green}. Delete all tasks`,
-  });
+  if (tasks.length > 1) {
+    choices.push({
+      value: 'all',
+      name: `${'all'.green}. Delete all tasks`,
+    });
+  }
 
   const { taskId } = await inquirer.prompt({
     type: 'list',
@@ -106,4 +108,21 @@ export const confirmSelection = async (message: string): Promise<boolean> => {
   });
 
   return answer;
+};
+
+export const showTasksCheckList = async (tasks: Task[]): Promise<string[]> => {
+  const choices = tasks.map((task, index) => ({
+    value: task.id,
+    name: `${(index + 1).toString().green}. ${task.title}`,
+    checked: task.completedOn !== null,
+  }));
+
+  const { tasksIdsToBeCompleted } = await inquirer.prompt({
+    type: 'checkbox',
+    name: 'tasksIdsToBeCompleted',
+    message: 'Select task(s) to complete:',
+    choices,
+  });
+
+  return tasksIdsToBeCompleted;
 };

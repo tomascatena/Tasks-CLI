@@ -5,6 +5,7 @@ import {
   readInput,
   showTasksToDelete,
   confirmSelection,
+  showTasksCheckList,
 } from './helpers/inquirer';
 import { saveToDB, readFromDB } from './helpers/DBHandlers';
 import { Tasks } from './models/Tasks';
@@ -49,6 +50,10 @@ const main = async () => {
         break;
       case '5':
         // Complete tasks
+        const tasksIdsToBeCompleted = await showTasksCheckList(tasks.getTasks());
+
+        tasks.setCompletedTasks(tasksIdsToBeCompleted);
+
         break;
 
       case '6':
@@ -72,6 +77,7 @@ const main = async () => {
 
             if (taskId && confirmDeleteTask) {
               tasks.deleteTask(taskId);
+
               console.log(`Task ${taskToDelete?.title} was deleted.`.blue.bold);
             }
           }
