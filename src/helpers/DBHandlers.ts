@@ -3,7 +3,7 @@ import fs from 'fs';
 const filePath = './src/db/db.json';
 
 export const saveToDB = (data: any) => {
-  fs.writeFileSync(filePath, JSON.stringify(data));
+  fs.writeFileSync(filePath, JSON.stringify({ tasks: data }));
 };
 
 export const readFromDB = () => {

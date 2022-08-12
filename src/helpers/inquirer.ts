@@ -1,5 +1,6 @@
 import inquirer from 'inquirer';
 import 'colors';
+import { Task } from '../models/Task';
 
 const menuOptions = [
   {
@@ -66,6 +67,30 @@ export const readInput = async (message: string) => {
     name: 'answer',
     message,
     validate: (input: string) => (input.trim().length > 0 ? true : 'Please enter a value'),
+  });
+
+  return answer;
+};
+
+export const showTasksToDelete = async (tasks: Task[]) => {
+  const { taskId } = await inquirer.prompt({
+    type: 'list',
+    name: 'taskId',
+    message: 'Select a task to delete:',
+    choices: tasks.map((task, index) => ({
+      value: task.id,
+      name: `${(index + 1).toString().green}. ${task.title}`,
+    })),
+  });
+
+  return taskId;
+};
+
+export const confirmSelection = async (message: string): Promise<boolean> => {
+  const { answer } = await inquirer.prompt({
+    type: 'confirm',
+    name: 'answer',
+    message,
   });
 
   return answer;
