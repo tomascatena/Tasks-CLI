@@ -72,7 +72,7 @@ export const readInput = async (message: string) => {
   return answer;
 };
 
-export const showTasksToDelete = async (tasks: Task[]) => {
+export const showTasksToDelete = async (tasks: Task[]): Promise<string> => {
   const choices = tasks.map((task, index) => ({
     value: task.id,
     name: `${(index + 1).toString().green}. ${task.title}`,

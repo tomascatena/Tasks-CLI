@@ -58,31 +58,37 @@ const main = async () => {
 
       case '6':
         // Delete tasks
-        if (tasks.getTasks().length) {
-          const taskId = await showTasksToDelete(tasks.getTasks());
+        const currentTasks = tasks.getTasks();
 
-          if (taskId === 'all') {
-            tasks.deleteAllTasks();
-          } else if (taskId === '0') {
-            break;
-          } else {
-            const taskToDelete = tasks.getTasks().find((t) => t.id === taskId);
-
-            let confirmDeleteTask = false;
-            if (taskToDelete) {
-              confirmDeleteTask = await confirmSelection(
-                `Are you sure you want to delete task ${taskToDelete?.title}?`
-              );
-            }
-
-            if (taskId && confirmDeleteTask) {
-              tasks.deleteTask(taskId);
-
-              console.log(`Task ${taskToDelete?.title} was deleted.`.blue.bold);
-            }
-          }
-        } else {
+        if (!currentTasks.length) {
           console.log('There are no tasks to delete.'.red.bold);
+        }
+
+        const taskId = await showTasksToDelete(currentTasks);
+
+        if (taskId === '0') {
+          break;
+        }
+
+        if (taskId === 'all') {
+          tasks.deleteAllTasks();
+        }
+
+        const taskToDelete = currentTasks.find((t) => t.id === taskId);
+
+        if (!taskToDelete) {
+          console.log('Task not found.'.red.bold);
+          break;
+        }
+
+        const confirmDeleteTask = await confirmSelection(
+          `Are you sure you want to delete task ${taskToDelete?.title}?`
+        );
+
+        if (confirmDeleteTask) {
+          tasks.deleteTask(taskId);
+
+          console.log(`Task ${taskToDelete?.title} was deleted.`.blue.bold);
         }
 
         break;
